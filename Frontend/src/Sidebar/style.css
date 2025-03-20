@@ -1,0 +1,51 @@
+.Sidebar {
+    max-height: 100%;
+    width: 15vw;
+    background-color: #F5877Cff;
+    display: flex;
+    flex-direction: column;
+    padding-top: 5vh;
+}
+
+.MenuButton {
+    margin-left: 2.5vw;
+    margin-top: 1vh;
+    margin-bottom: 1vh;
+    height: 5vh;
+    width: 10vw;
+    background-color: rgba(0, 0, 0, 0);
+    border-radius: 5px;
+    border-color: rgba(0, 0, 0, 0);
+    color: #FEFCE3ff;
+    text-align: left;
+    font-size: medium;
+    font-family: Helvetica, sans-serif;
+    cursor: pointer;
+}
+
+.MenuButton:hover {
+    background-color: #FEFCE3ff;
+    color: #000720ff;
+    box-shadow: 3px 3px #C9C8BCff;
+    font-weight: 600;
+}
+
+.MenuButton:active {
+    background-color: #724355;
+    color: #FEFCE3ff;
+    box-shadow: 3px 3px #FEFCE3ff;
+    font-weight: 600;
+}
+
+.LogoImageSideBar {
+    width: 100px;
+    height: 100px;
+    margin-top: -10%;
+    margin-bottom: 3%;
+}
+
+.LogoFontSideBar {
+    height: 100px;
+    margin-top: -15px;
+    margin-left: -15px;
+}

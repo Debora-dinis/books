@@ -1,0 +1,249 @@
+.ResultsBody {
+    max-height: 100%;
+    width: 100%;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+.ResultCard {
+    background: #F5877Cff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    word-wrap: break-word;
+    width: 20%;
+    margin-inline: 1%;
+    margin-block: 2.5%;
+    min-height: 30vh;
+    max-height: 30vh;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+}
+
+.CardTitle {
+    color: #FEFCE3ff;
+    font-family: Helvetica, sans-serif;
+    font-weight: 600;
+    text-align: left;
+
+}
+
+.CardAuthor {
+    color: #FEFCE3ff;
+    font-family: monospace;
+    font-size: small;
+    text-align: left;
+
+}
+
+.CardButtonTooltip {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.CardButton {
+    height: 30px;
+    width: 30px;
+    background-color: #724355;
+    border-radius: 50px;
+    border-color: #72435500;
+    margin-inline: 0.5vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.CardButton:hover {
+    background-color: #FEFCE3ff;
+}
+
+.CardButton:active {
+    background-color: #FEFCE3ff;
+    border: solid 2px #724355;
+
+}
+
+.CardButtonImage {
+    height: 15px;
+}
+
+.tooltipText {
+    z-index: 1;
+    visibility: hidden;
+    background-color: #724355;
+    color: #FEFCE3ff;
+    font-family: Helvetica, sans-serif;
+    font-size: smaller;
+    text-align: center;
+    padding: 5px 5px;
+    border-radius: 5px;
+    position: absolute;
+    bottom: 120%;
+    /* Position above the button */
+    left: -5vw;
+    opacity: 0;
+    transition: opacity 0.3s;
+    white-space: nowrap;
+}
+
+.CardButtonTooltip:hover .tooltipText {
+    visibility: visible;
+    opacity: 1;
+}
+
+.NoImage {
+    height: 20vh;
+    min-width: 7vw;
+    border: solid 3px #724355;
+    border-radius: 10px;
+    margin-right: 1vw;
+    margin-top: 15px;
+    font-family: Helvetica, sans-serif;
+    justify-items: center;
+    align-content: center;
+    color: #724355
+}
+
+.BookCover {
+    margin-top: 15px;
+    height: 20vh;
+    min-width: 7vw;
+    border: solid 3px #724355;
+    border-radius: 10px;
+    margin-right: 1vw;
+}
+
+.MoreButton{
+    width: 80%;
+    background-color: #d2691e00;
+    color: #F5877Cff;
+    border: solid;
+    border-radius: 7px;
+    padding: 6px;
+    margin-bottom: 2%;
+    cursor: pointer;
+}
+
+.MoreButton:hover{
+    background-color: #724355;
+    color: #FEFCE3ff;
+    border: solid;
+    border-radius: 7px;
+}
+
+.MoreButton:active{
+    background-color: #724355;
+    color: #F5877Cff;
+    border: solid;
+    border-radius: 7px;
+}
+
+.air-datepicker {
+    color: #FEFCE3ff; /* White text */
+    border-radius: 25px;
+  }
+  
+  .air-datepicker-cell.-selected-,
+  .air-datepicker-cell.-selected-:hover {
+    background-color: #F5877Cff !important; /* Highlight selected date */
+    color: #FEFCE3ff !important;
+  }
+  
+  .air-datepicker-nav {
+    background: #724355;
+    color: #FEFCE3ff;
+    border-radius: 5px;
+  }
+  
+  .air-datepicker-nav--title {
+    font-weight: bold;
+  }
+  
+  .air-datepicker-cell.-current- {
+    border: 2px solid #F5877Cff;
+  }
+  .air-datepicker-body--day-name {
+    color: #F5877Cff !important; 
+    font-weight: bold; 
+  }
+  .air-datepicker-cell.-current- {
+    color: #f5877c !important;
+}
+.air-datepicker--pointer{
+    opacity: 0;
+}
+
+.date-picker-container{
+    top: 10%;
+    left: 30%;
+    width: 50%;
+    position: fixed;
+    height: 15%;
+    background-color: #F5877Cff;
+    border: solid 5px #724355;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    box-shadow:2px 8px 14px 0px #000720ff;
+    align-items: center;
+    padding: 20px;
+    z-index: 1;
+}
+
+.dateInput{
+    border-radius: 5px;
+    background-color: #724355;
+    color: #FEFCE3ff;
+    font-family: Helvetica, sans-serif;
+    border: solid rgba(0, 7, 32, 0);
+    width: 10vw;
+    text-align: center;
+    cursor: pointer;
+}
+
+.dateLabel{
+    font-family: Helvetica, sans-serif;
+    color: #FEFCE3ff;
+}
+
+.inputContainer{
+    display: flex;
+    padding: 40px 10px 10px 10px ;
+    justify-content: space-evenly;
+    width: 100%;
+    
+}
+
+.saveBtn{
+    background-color: #724355;
+    border-radius: 5px;
+    color: #FEFCE3ff;
+    width: 10vw;
+    border-color: #72435500;
+    font-family: Helvetica;
+    cursor: pointer;
+}
+
+.dateExitButton{
+    height: 30px;
+    width: 30px;
+    background-color: #724355;
+    border-radius: 100px;
+    margin: 10px;
+    border: #724355;
+    color: #F5877Cff;
+    font-weight: 900;
+    font-family: monospace;
+    cursor: pointer;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+
+}

@@ -1,0 +1,233 @@
+.upperBar {
+    display: flex; /* Fixed syntax */
+    width: 96.5%;
+    height: 6vh;
+    margin-left: 1%;
+    margin-top: 2vh;
+    border-radius: 10px;
+    align-items: center; /* Center items vertically */
+    padding: 0 10px;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropbtn {
+    width: 10vw;
+    height: 6vh;
+    background-color: #F5877C;
+    color: #FEFCE3;
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    border-radius: 10px;
+    margin-right: 1vw;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+    opacity: 0;
+    visibility: hidden;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 10vw;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    margin-top: 2px;
+    transition:all 0.5s ease-out;
+}
+
+/* Links inside the dropdown */
+
+.collectionbtn{
+    border-radius: 5px;
+    width: 100%;
+    color: #000720;
+    padding: 12px 16px;
+    display: flex;
+    font-family: Helvetica, sans-serif;
+    font-weight: 550;
+    background-color: #FEFCE3;
+    border:none;
+}
+
+
+/* Change color of dropdown links on hover */
+.collectionbtn:hover{
+    color: #FEFCE3;
+    background-color: #F5877C;
+}
+
+.collectionbtn:active{
+    color: #000720;
+    background-color: #F5877C;
+}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+    opacity: 1;
+    visibility: visible;
+    z-index: 1;
+}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.dropdown:hover .dropbtn {
+    background-color: #724355;
+}
+
+.createbtn {
+    background-color: #F5877C;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    border-radius: 50px;
+    height: 30px;
+    width: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.createbtn:hover {
+    background-color: #724355;
+}
+
+.tooltip-container {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .tooltipTextCreateBtn {
+    visibility: hidden;
+    background-color: #F5877Cff;
+    color: #FEFCE3ff;
+    text-align: center;
+    font-family: Helvetica, sans-serif;
+    padding: 5px 10px;
+    border-radius: 5px;
+    position: absolute;
+    left: 150%; 
+    top: 50%;
+    transform: translateY(-50%);
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  
+  .tooltip-container:hover .tooltipTextCreateBtn {
+    visibility: visible;
+    opacity: 1;
+  }
+
+/* Initially hidden */
+.inputCollection {
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    margin-top: 30vh;
+    height: 8vh;
+    width: 60%;
+    background-color: #F5877C;
+    border-radius: 10px;
+
+}
+
+.collectionName{
+    height: 5vh;
+    width: 80%;
+    border-radius: 10px;
+    background-color: #00072000;
+    border: none;
+    color:#FEFCE3;
+    outline: none;
+    font-size: medium;
+}
+
+.collectionName::placeholder{
+    color:#FEFCE3
+}
+
+
+.submitBtn{
+    color: #FEFCE3;
+    cursor: pointer;
+    border-radius: 10px;
+    height: 5vh;
+    background-color: #724355;
+    border: #724355;
+    box-shadow:2px 2px #000720;
+    width: 5vw;
+    font-weight: 550;
+
+}
+
+.submitBtn:hover{
+    cursor: pointer;
+    border-radius: 10px;
+    height: 5vh;
+    background-color: #000720;
+    border: #724355;
+    box-shadow:2px 2px #FEFCE3;
+
+}
+
+.submitBtn:active{
+    cursor: pointer;
+    border-radius: 10px;
+    height: 5vh;
+    background-color: #000720;
+    border: #724355;
+    box-shadow:2px 2px #FEFCE3;
+    color: #F5877C;
+}
+
+.popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.7);
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.popup-content {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    color: #000720;
+    font-family: Helvetica, sans-serif;
+}
+
+.popup-content button {
+    margin-top: 10px;
+    padding: 5px 10px;
+    background-color: #F5877C;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.popup-content button:hover {
+    background-color: #724355;
+}
+
+.closeBtn{
+    color:#FEFCE3;
+    background-color: #00072000;
+    margin-top: -3.5vh;
+    border: none;
+    font-weight: 600;
+    width: 5%;
+    margin-left: -2vw;
+
+}
