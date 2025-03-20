@@ -1,10 +1,10 @@
+const dotenv=require("dotenv")
+dotenv.config()
 const express = require("express");
 const axios = require("axios");
 const cors = require("cors");
 const app = express();
 const port = 3001;
-const APIKey = "AIzaSyCxmSR2DdDUWZIVkagNj0Pc0CqFRssk9TQ";
-const db = require("./Database/Database.js");
 const wishlistRemove = require("./Controllers/Wishlist/Wishlist.remove.js");
 const wishlistGet = require("./Controllers/Wishlist/Wishlist.list.js");
 const wishlistInsert = require("./Controllers/Wishlist/Wishlist.insert.js");
@@ -46,7 +46,7 @@ app.post("/search", async (req, res) => {
   let reqOptions = {
     url: `https://www.googleapis.com/books/v1/volumes?q=${
       req.body.Search
-    }&fields=items(id,volumeInfo(title,authors,publisher,publishedDate,description,pageCount,categories,imageLinks/thumbnail,infoLink,industryIdentifiers))&key=AIzaSyCxmSR2DdDUWZIVkagNj0Pc0CqFRssk9TQ&startIndex=${
+    }&fields=items(id,volumeInfo(title,authors,publisher,publishedDate,description,pageCount,categories,imageLinks/thumbnail,infoLink,industryIdentifiers))&key=${process.env.API}&startIndex=${
       req.body.startIndex || 0
     }&maxResults=20`,
     method: "GET",
