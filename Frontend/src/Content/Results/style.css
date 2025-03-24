@@ -8,6 +8,25 @@
     justify-content: space-evenly;
 }
 
+.ReturnBtnDiv{
+    width: 90%;
+    margin-bottom: -3vh;
+}
+
+.ReturnBtn{
+    height: 5vh;
+    background-color: rgba(255, 255, 255, 0);
+    border: none;
+    margin-top: 2vh;
+    margin-left: -2vw;
+    cursor: pointer;
+    
+}
+
+.ReturnBtnImg{
+    height: 5vh;
+}
+
 .ResultCard {
     background: #F5877Cff;
     padding: 15px;

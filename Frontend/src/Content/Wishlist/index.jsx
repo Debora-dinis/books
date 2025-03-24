@@ -20,5 +20,5 @@ export default function Wishlist() {
     fetchWishlist();
   }, []); // useEffect runs only once when the component mounts
   if (!results.length)return <div></div>
-  return <Results Results={results} type="wishlist" updatepage={fetchWishlist} />;
+  return <Results Results={results} type="Wishlist" updatepage={fetchWishlist} />;
 }

@@ -9,7 +9,7 @@ const toReadCreateTable = (db) => {
       }
 
       // SQL query to create the new table with the specified structure
-      const createTableQuery = `CREATE TABLE IF NOT EXISTS toRead (
+      const createTableQuery = `CREATE TABLE IF NOT EXISTS ToRead (
         google_id TEXT UNIQUE NOT NULL,
         title TEXT NOT NULL,
         authors TEXT,

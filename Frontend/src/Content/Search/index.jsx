@@ -41,7 +41,7 @@ export default function () {
       SetTotalItems(res.data.items.length<20);
     }
   }
-  if (results) return <Results fetchMore={fetchMore} Results={results} startIndex={startIndex} totalItems={totalItems} />;
+  if (results) return <Results setResults={SetResults} fetchMore={fetchMore} Results={results} startIndex={startIndex} totalItems={totalItems} />;
   return (
     <div className="SearchBody">
       <img className="LogoImage" src="./logo.png" />

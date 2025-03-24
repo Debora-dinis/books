@@ -1,4 +1,4 @@
-//Insert book in the Wishlist
+//Insert book in the Read collection
 const db = require("../../../Database/Database.js");
 const readInsert = (req, res) => {
   const {

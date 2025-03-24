@@ -12,6 +12,9 @@ const collectionsCreateCollection = require("./Controllers/Collections/Collectio
 const collectionsGet = require("./Controllers/Collections/Collections.ListCollections.js");
 const listCollectionBooks = require("./Controllers/Collections/Collections.ListCollectionBooks.js");
 const readInsert = require("./Controllers/Collections/Read/Collections.Read.InsertBook.js");
+const bookRemove = require("./Controllers/Collections/Collections.RemoveBook.js");
+const bookInsert = require("./Controllers/Collections/Collections.InsertBook.js");
+const readingInsert = require("./Controllers/Collections/Reading/Collections.Reading.InsertBook.js");
 app.use(cors());
 app.use(express.json());
 app.get("/hello", (req, res) => {
@@ -24,9 +27,16 @@ app.post("/CreateCollection",collectionsCreateCollection)
 app.get("/Collections",collectionsGet)
 //Select all books from a collection
 app.post("/listCollectionBooks",listCollectionBooks)
+//Remove a book from a collection
+app.delete("/removeBook/:googleId/:table_name",bookRemove)
+//Insert a book to a collection
+app.post("/insertBook",bookInsert)
 
 //Add a book to the read collection
 app.post("/Read",readInsert)
+
+//Add a book to the reading collection
+app.post("/Reading",readingInsert)
 
 // Add a book to the wishlist
 app.post("/Wishlist",wishlistInsert );

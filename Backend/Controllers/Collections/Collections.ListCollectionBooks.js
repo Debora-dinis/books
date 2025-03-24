@@ -4,7 +4,7 @@ const listCollectionBooks = (req, res) => {
   const { table_name } = req.body;
 
   const query = `
-      Select * From ${table_name}
+      Select * From ${table_name.replaceAll(" ","")}
     `;
 
   db.all(query, [], function (err, results) {

@@ -1,0 +1,42 @@
+.collectionPicker{
+    top: 10%;
+    width: 40%;
+    position: fixed;
+    height: auto;
+    background-color: #F5877Cff;
+    border: solid 5px #724355;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    box-shadow:2px 8px 14px 0px #000720ff;
+    align-items: center;
+    padding-bottom:25px;
+}
+
+.collectionBtn{
+    background-color: #724355;
+    border: solid 5px #724355;
+    color:#FEFCE3ff;
+    border-radius: 8px;
+    width: 70%;
+    margin-top: 2vh;
+}
+
+.collectionBtn:hover{
+    background-color: #FEFCE3ff;
+    color: #F5877Cff;
+    border: solid 2px #724355;
+    border-radius: 8px;
+    height: 4vh;
+}
+
+.selectionText{
+    color:#FEFCE3ff;
+    font-family: Helvetica, sans-serif;
+    margin-top: 3vh;
+}
+
+.ExitDiv{
+    position: absolute;
+    left: 0%;
+}

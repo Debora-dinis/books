@@ -27,16 +27,18 @@ export default function UpperBar() {
   useEffect(() => {
     fetchCollections();
   }, []);
-
+function fetchCollectionBooks (){
+  if (!selectCollection) return;
+  axios
+    .post("http://localhost:3001/listCollectionBooks", {
+      table_name: selectCollection.trim(),
+    })
+    .then((res) => {
+      setCollectionBooks(res?.data || []);
+    });
+}
   useEffect(() => {
-    if (!selectCollection) return;
-    axios
-      .post("http://localhost:3001/listCollectionBooks", {
-        table_name: selectCollection.trim(),
-      })
-      .then((res) => {
-        setCollectionBooks(res?.data || []);
-      });
+    fetchCollectionBooks()
   }, [selectCollection]);
 
   // Handles submit button click
@@ -137,8 +139,8 @@ export default function UpperBar() {
         fetchMore={undefined}
         startIndex={undefined}
         totalItems={undefined}
-        updatepage={undefined}
-        type="collection"
+        updatepage={fetchCollectionBooks}
+        type={selectCollection}
       ></Results>
     </>
   );

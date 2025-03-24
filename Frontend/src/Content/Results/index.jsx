@@ -6,7 +6,8 @@ import Bookinfo from "./Bookinfo";
 import axios from "axios";
 import AirDatepicker from "air-datepicker";
 import "air-datepicker/air-datepicker.css";
-import localeEn from 'air-datepicker/locale/en';
+import localeEn from "air-datepicker/locale/en";
+import AddtoCollection from "../Collection/Addtocollection/Addtocollection";
 export default function ({
   Results,
   fetchMore,
@@ -14,24 +15,26 @@ export default function ({
   totalItems,
   type = "search",
   updatepage,
+  setResults,
 }) {
   const [showDatePicker, setShowDatePicker] = useState(null);
   const [dates, setDates] = useState({ startDate: "", endDate: "" });
   const [Selected, Setselected] = useState(null);
+  const[collectiontoadd,Setcollectiontoadd]=useState(null);
   useEffect(() => {
     if (showDatePicker) {
       new AirDatepicker("#start-date", {
         onSelect({ formattedDate }) {
           setDates((prev) => ({ ...prev, startDate: formattedDate }));
         },
-        locale: localeEn
+        locale: localeEn,
       });
 
       new AirDatepicker("#end-date", {
         onSelect({ formattedDate }) {
           setDates((prev) => ({ ...prev, endDate: formattedDate }));
         },
-        locale: localeEn
+        locale: localeEn,
       });
     }
   }, [showDatePicker]);
@@ -45,12 +48,12 @@ export default function ({
       description: book.description || "",
       pageCount: book.pageCount || "",
       categories: book.categories || [""],
-      thumbnail: book.imageLinks?.thumbnail ||book?.thumbnail || "",
+      thumbnail: book.imageLinks?.thumbnail || book?.thumbnail || "",
       infoLink: book.infoLink,
-      startDate: dates.startDate,
-      endDate: dates.endDate,
+      startDate: dates.startDate || "",
+      endDate: dates.endDate || "",
     });
-    setShowDatePicker(null)
+    setShowDatePicker(null);
   }
   async function addtowishlist(book, id) {
     const res = await axios.post("http://localhost:3001/Wishlist", {
@@ -68,6 +71,13 @@ export default function ({
   }
   async function removetowishlist(id) {
     const res = await axios.delete("http://localhost:3001/Wishlist/" + id);
+    updatepage();
+  }
+
+  async function bookRemove(id, table_name) {
+    const res = await axios.delete(
+      `http://localhost:3001/removeBook/${id}/${table_name}`
+    );
     updatepage();
   }
 
@@ -96,14 +106,19 @@ export default function ({
               <span className="tooltipText">Add to wishlist</span>
             </div>
             <div className="CardButtonTooltip">
-              <button className="CardButton">
+              <button className="CardButton" onClick={()=>Setcollectiontoadd({...info,id})}>
                 {" "}
                 <img className="CardButtonImage" src="./collection.png" />
               </button>
               <span className="tooltipText">Add to a collection</span>
             </div>
             <div className="CardButtonTooltip">
-              <button className="CardButton" onClick={()=>{setShowDatePicker(id)}}>
+              <button
+                className="CardButton"
+                onClick={() => {
+                  setShowDatePicker(id);
+                }}
+              >
                 {" "}
                 <img className="CardButtonImage" src="./read.png" />
               </button>
@@ -121,7 +136,101 @@ export default function ({
             </div>
           </div>
         );
-      case "wishlist":
+
+      case "Reading":
+        return (
+          <div
+            style={{
+              display: "flex",
+              position: "absolute",
+              bottom: "12px",
+              width: "90%",
+              justifyContent: "right",
+            }}
+          >
+            {" "}
+            <div className="CardButtonTooltip">
+              <button className="CardButton">
+                {" "}
+                <img className="CardButtonImage" src="./stats.png" />
+              </button>
+              <span className="tooltipText">
+                View reading progress in the dashboard
+              </span>
+            </div>
+            <div className="CardButtonTooltip">
+              <button
+                className="CardButton"
+                onClick={() => bookRemove(savedInfo.google_id,"Reading")}
+              >
+                {" "}
+                <img className="CardButtonImage" src="./delete.png" />
+              </button>
+              <span className="tooltipText">Remove book from collection</span>
+            </div>
+            <div className="CardButtonTooltip">
+              <button className="CardButton">
+                {" "}
+                <img className="CardButtonImage"  onClick={()=>Setcollectiontoadd({...info,id})} src="./collection.png" />
+              </button>
+              <span className="tooltipText">Add to a collection</span>
+            </div>
+            <div className="CardButtonTooltip">
+              <button
+                onClick={() => Setselected(info || savedInfo)}
+                className="CardButton"
+              >
+                {" "}
+                <img className="CardButtonImage" src="./information.png" />
+              </button>
+              <span className="tooltipText">More information</span>
+            </div>
+          </div>
+        );
+
+      case "Read":
+        return (
+          <div
+            style={{
+              display: "flex",
+              position: "absolute",
+              bottom: "12px",
+              width: "90%",
+              justifyContent: "right",
+            }}
+          >
+            {" "}
+            <div className="CardButtonTooltip">
+              <button
+                className="CardButton"
+                onClick={() => bookRemove(savedInfo.google_id,"Read")}
+              >
+                {" "}
+                <img className="CardButtonImage" src="./delete.png" />
+              </button>
+              <span className="tooltipText">Remove book from collection</span>
+            </div>
+            <div className="CardButtonTooltip">
+              <button className="CardButton">
+                {" "}
+                <img className="CardButtonImage" onClick={()=>Setcollectiontoadd({...info,id})} src="./collection.png" />
+              </button>
+              <span className="tooltipText">Add to a collection</span>
+            </div>
+            <div className="CardButtonTooltip">
+              <button
+                onClick={() => Setselected(info || savedInfo)}
+                className="CardButton"
+              >
+                {" "}
+                <img className="CardButtonImage" src="./information.png" />
+              </button>
+              <span className="tooltipText">More information</span>
+            </div>
+          </div>
+        );
+
+      case "Wishlist":
         return (
           <div
             style={{
@@ -146,12 +255,71 @@ export default function ({
             <div className="CardButtonTooltip">
               <button className="CardButton">
                 {" "}
-                <img className="CardButtonImage" src="./collection.png" />
+                <img className="CardButtonImage" onClick={()=>Setcollectiontoadd({...info,id})}  src="./collection.png" />
               </button>
               <span className="tooltipText">Add to a collection</span>
             </div>
             <div className="CardButtonTooltip">
-              <button className="CardButton" onClick={()=>{setShowDatePicker(savedInfo.google_id)}}>
+              <button
+                className="CardButton"
+                onClick={() => {
+                  setShowDatePicker(savedInfo.google_id);
+                }}
+              >
+                {" "}
+                <img className="CardButtonImage" src="./read.png" />
+              </button>
+              <span className="tooltipText">Already read</span>
+            </div>
+            <div className="CardButtonTooltip">
+              <button
+                onClick={() => Setselected(info || savedInfo)}
+                className="CardButton"
+              >
+                {" "}
+                <img className="CardButtonImage" src="./information.png" />
+              </button>
+              <span className="tooltipText">More information</span>
+            </div>
+          </div>
+        );
+
+      default:
+        return (
+          <div
+            style={{
+              display: "flex",
+              position: "absolute",
+              bottom: "12px",
+              width: "90%",
+              justifyContent: "right",
+            }}
+          >
+            {" "}
+            <div className="CardButtonTooltip">
+              <button
+                className="CardButton"
+                onClick={() => removetowishlist(savedInfo.google_id)}
+              >
+                {" "}
+                <img className="CardButtonImage" src="./delete.png" />
+              </button>
+              <span className="tooltipText">Remove from collection</span>
+            </div>
+            <div className="CardButtonTooltip">
+              <button className="CardButton">
+                {" "}
+                <img className="CardButtonImage" onClick={()=>Setcollectiontoadd({...info,id})} src="./collection.png" />
+              </button>
+              <span className="tooltipText">Add to a collection</span>
+            </div>
+            <div className="CardButtonTooltip">
+              <button
+                className="CardButton"
+                onClick={() => {
+                  setShowDatePicker(savedInfo.google_id);
+                }}
+              >
                 {" "}
                 <img className="CardButtonImage" src="./read.png" />
               </button>
@@ -173,6 +341,11 @@ export default function ({
   }
   return (
     <div className="ResultsBody">
+      {type=="search" && <div className="ReturnBtnDiv">
+        <button onClick={()=>setResults(null)} className="ReturnBtn">
+        <img className="ReturnBtnImg" src="./return.png"></img>
+        </button>
+      </div>}
       {Results?.map(({ id, volumeInfo: info, ...savedInfo }) => (
         <div className="ResultCard">
           {" "}
@@ -199,21 +372,45 @@ export default function ({
             </div>
           </div>
           {drawCardButtons(info, id, savedInfo)}
-          {showDatePicker==(id || savedInfo.google_id) && (
-          <div className="date-picker-container">
-            <button className="dateExitButton" onClick={()=>{setShowDatePicker(null)}}>x</button>
-            <div className="inputContainer">
-            <label className="dateLabel">Start Date</label>
-            <input className="dateInput" type="text" id="start-date" readOnly />
-            <label className="dateLabel">End Date</label>
-            <input className="dateInput" type="text" id="end-date" readOnly />
+          {showDatePicker == (id || savedInfo.google_id) && (
+            <div className="date-picker-container">
+              <button
+                className="dateExitButton"
+                onClick={() => {
+                  setShowDatePicker(null);
+                }}
+              >
+                x
+              </button>
+              <div className="inputContainer">
+                <label className="dateLabel">Start Date</label>
+                <input
+                  className="dateInput"
+                  type="text"
+                  id="start-date"
+                  readOnly
+                />
+                <label className="dateLabel">End Date</label>
+                <input
+                  className="dateInput"
+                  type="text"
+                  id="end-date"
+                  readOnly
+                />
+              </div>
+              <button
+                className="saveBtn"
+                onClick={() => {
+                  readInsert(info || savedInfo, id || savedInfo.google_id);
+                }}
+              >
+                Save
+              </button>
             </div>
-            <button className="saveBtn" onClick={()=>{readInsert(info||savedInfo,id||savedInfo.google_id)}}>Save</button>
-          </div>
-        )}
+          )}
         </div>
       ))}
-      
+
       {!totalItems && type == "search" && (
         <button className="MoreButton" onClick={fetchMore}>
           Load More
@@ -221,6 +418,7 @@ export default function ({
       )}
 
       {Selected && <Bookinfo bookinfo={Selected} setbook={Setselected} />}
+      {collectiontoadd&&<AddtoCollection collection={collectiontoadd} close={()=>Setcollectiontoadd(null)} setShowDatePicker={setShowDatePicker}/>}
     </div>
   );
 }

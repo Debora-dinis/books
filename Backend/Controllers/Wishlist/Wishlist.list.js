@@ -3,7 +3,7 @@ const db = require("../../Database/Database.js");
 const wishlistGet = (req, res) => {
   db.all("Select * From Wishlist", (error, result) => {
     if (error) {
-      res.status(500).json({ error: err.message });
+      res.status(500).json({ error: error.message });
     } else {
       res.json(result);
     }

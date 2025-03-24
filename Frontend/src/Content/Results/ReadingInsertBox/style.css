@@ -1,0 +1,39 @@
+.inputText {
+    color:#FEFCE3ff;
+    font-family: Helvetica, sans-serif;
+    margin-right: 1vw;
+}
+
+.saveBtnReading{
+    background-color: #724355;
+    border-radius: 5px;
+    color: #FEFCE3ff;
+    width: 10vw;
+    border-color: #72435500;
+    font-family: Helvetica;
+    cursor: pointer;
+    height: 3vh;
+    margin-top: 3vh;
+}
+
+.inputDiv{
+    border-radius: 5px;
+    background-color: #724355;
+    color: #FEFCE3ff;
+    font-family: Helvetica, sans-serif;
+    border: solid rgba(0, 7, 32, 0);
+    width: 10vw;
+    text-align: center;
+    cursor: pointer;
+}
+
+.inputDiv::placeholder {
+    color: #FEFCE3ff; /* Change to your desired color */
+    opacity: 1; /* Ensures full visibility */
+  }
+  
+
+  .inputDiv::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }

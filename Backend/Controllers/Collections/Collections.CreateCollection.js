@@ -11,7 +11,7 @@ const collectionsCreateCollection = (req, res) => {
 
     // SQL query to create the new table with the specified structure
     const createTableQuery = `
-      CREATE TABLE IF NOT EXISTS ${table_name} (
+      CREATE TABLE IF NOT EXISTS ${table_name.replaceAll(" ","")} (
         google_id TEXT UNIQUE NOT NULL,
         title TEXT NOT NULL,
         authors TEXT,
