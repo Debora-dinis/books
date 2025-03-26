@@ -3,6 +3,7 @@ import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import AirDatepicker from "air-datepicker";
 import "air-datepicker/air-datepicker.css";
+import localeEn from "air-datepicker/locale/en";
 import "./style.css";
 
 export default function ReadingInsertBox({ collection, close }) {
@@ -14,7 +15,10 @@ export default function ReadingInsertBox({ collection, close }) {
     if (datepickerRef.current) {
       new AirDatepicker(datepickerRef.current, {
         onSelect: ({ date }) => setStartDate(date.toISOString().split("T")[0]),
+        locale: localeEn,
+        dateFormat: "yyyy-MM-dd"
       });
+      
     }
   }, []);
 

@@ -1,30 +1,49 @@
 .ResultsBody {
-    max-height: 100%;
     width: 100%;
-    overflow-y: auto;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-evenly;
 }
 
-.ReturnBtnDiv{
+.ReturnBtnDiv {
     width: 90%;
     margin-bottom: -3vh;
 }
 
-.ReturnBtn{
+.ReturnBtn {
     height: 5vh;
     background-color: rgba(255, 255, 255, 0);
     border: none;
     margin-top: 2vh;
     margin-left: -2vw;
     cursor: pointer;
-    
+
 }
 
-.ReturnBtnImg{
+.ReturnBtnImg {
     height: 5vh;
+}
+
+.Returntooltip {
+    visibility: hidden;
+    background-color: #F5877Cff;
+    color: #FEFCE3ff;
+    text-align: center;
+    padding: 5px 8px;
+    border-radius: 5px;
+    position: absolute;
+    left:25%;
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: opacity 0.2s;
+    white-space: nowrap;
+    font-family: Helvetica, sans-serif;
+}
+
+.ReturnBtn:hover .Returntooltip {
+    visibility: visible;
+    opacity: 1;
 }
 
 .ResultCard {
@@ -139,7 +158,7 @@
     margin-right: 1vw;
 }
 
-.MoreButton{
+.MoreButton {
     width: 80%;
     background-color: #d2691e00;
     color: #F5877Cff;
@@ -150,14 +169,14 @@
     cursor: pointer;
 }
 
-.MoreButton:hover{
+.MoreButton:hover {
     background-color: #724355;
     color: #FEFCE3ff;
     border: solid;
     border-radius: 7px;
 }
 
-.MoreButton:active{
+.MoreButton:active {
     background-color: #724355;
     color: #F5877Cff;
     border: solid;
@@ -165,41 +184,46 @@
 }
 
 .air-datepicker {
-    color: #FEFCE3ff; /* White text */
+    color: #FEFCE3ff;
+    /* White text */
     border-radius: 25px;
-  }
-  
-  .air-datepicker-cell.-selected-,
-  .air-datepicker-cell.-selected-:hover {
-    background-color: #F5877Cff !important; /* Highlight selected date */
+}
+
+.air-datepicker-cell.-selected-,
+.air-datepicker-cell.-selected-:hover {
+    background-color: #F5877Cff !important;
+    /* Highlight selected date */
     color: #FEFCE3ff !important;
-  }
-  
-  .air-datepicker-nav {
+}
+
+.air-datepicker-nav {
     background: #724355;
     color: #FEFCE3ff;
     border-radius: 5px;
-  }
-  
-  .air-datepicker-nav--title {
+}
+
+.air-datepicker-nav--title {
     font-weight: bold;
-  }
-  
-  .air-datepicker-cell.-current- {
+}
+
+.air-datepicker-cell.-current- {
     border: 2px solid #F5877Cff;
-  }
-  .air-datepicker-body--day-name {
-    color: #F5877Cff !important; 
-    font-weight: bold; 
-  }
-  .air-datepicker-cell.-current- {
+}
+
+.air-datepicker-body--day-name {
+    color: #F5877Cff !important;
+    font-weight: bold;
+}
+
+.air-datepicker-cell.-current- {
     color: #f5877c !important;
 }
-.air-datepicker--pointer{
+
+.air-datepicker--pointer {
     opacity: 0;
 }
 
-.date-picker-container{
+.date-picker-container {
     top: 10%;
     left: 30%;
     width: 50%;
@@ -210,13 +234,13 @@
     border-radius: 10px;
     display: flex;
     flex-direction: column;
-    box-shadow:2px 8px 14px 0px #000720ff;
+    box-shadow: 2px 8px 14px 0px #000720ff;
     align-items: center;
     padding: 20px;
     z-index: 1;
 }
 
-.dateInput{
+.dateInput {
     border-radius: 5px;
     background-color: #724355;
     color: #FEFCE3ff;
@@ -227,20 +251,20 @@
     cursor: pointer;
 }
 
-.dateLabel{
+.dateLabel {
     font-family: Helvetica, sans-serif;
     color: #FEFCE3ff;
 }
 
-.inputContainer{
+.inputContainer {
     display: flex;
-    padding: 40px 10px 10px 10px ;
+    padding: 40px 10px 10px 10px;
     justify-content: space-evenly;
     width: 100%;
-    
+
 }
 
-.saveBtn{
+.saveBtn {
     background-color: #724355;
     border-radius: 5px;
     color: #FEFCE3ff;
@@ -250,7 +274,7 @@
     cursor: pointer;
 }
 
-.dateExitButton{
+.dateExitButton {
     height: 30px;
     width: 30px;
     background-color: #724355;

@@ -28,6 +28,7 @@ export default function ({
           setDates((prev) => ({ ...prev, startDate: formattedDate }));
         },
         locale: localeEn,
+        dateFormat: "yyyy-MM-dd"
       });
 
       new AirDatepicker("#end-date", {
@@ -35,6 +36,7 @@ export default function ({
           setDates((prev) => ({ ...prev, endDate: formattedDate }));
         },
         locale: localeEn,
+        dateFormat: "yyyy-MM-dd"
       });
     }
   }, [showDatePicker]);
@@ -169,6 +171,18 @@ export default function ({
               <span className="tooltipText">Remove book from collection</span>
             </div>
             <div className="CardButtonTooltip">
+              <button
+                className="CardButton"
+                onClick={() => {
+                  setShowDatePicker(savedInfo.google_id);
+                }}
+              >
+                {" "}
+                <img className="CardButtonImage" src="./read.png" />
+              </button>
+              <span className="tooltipText">Already read</span>
+            </div>
+            <div className="CardButtonTooltip">
               <button className="CardButton">
                 {" "}
                 <img className="CardButtonImage"  onClick={()=>Setcollectiontoadd({...info,id})} src="./collection.png" />
@@ -255,7 +269,7 @@ export default function ({
             <div className="CardButtonTooltip">
               <button className="CardButton">
                 {" "}
-                <img className="CardButtonImage" onClick={()=>Setcollectiontoadd({...info,id})}  src="./collection.png" />
+                <img className="CardButtonImage" onClick={()=>Setcollectiontoadd({...savedInfo,id})}  src="./collection.png" />
               </button>
               <span className="tooltipText">Add to a collection</span>
             </div>
@@ -299,7 +313,7 @@ export default function ({
             <div className="CardButtonTooltip">
               <button
                 className="CardButton"
-                onClick={() => removetowishlist(savedInfo.google_id)}
+                onClick={() => bookRemove(savedInfo.google_id, type)}
               >
                 {" "}
                 <img className="CardButtonImage" src="./delete.png" />
@@ -344,6 +358,7 @@ export default function ({
       {type=="search" && <div className="ReturnBtnDiv">
         <button onClick={()=>setResults(null)} className="ReturnBtn">
         <img className="ReturnBtnImg" src="./return.png"></img>
+        <span className="Returntooltip">Refresh Search</span>
         </button>
       </div>}
       {Results?.map(({ id, volumeInfo: info, ...savedInfo }) => (

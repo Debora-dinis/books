@@ -3,7 +3,9 @@ const wishlistCreateTable = require("../Controllers/Wishlist/Wishlist.CreateTabl
 const collectionsCreateTableCollections = require("../Controllers/Collections/Collections.CreateTableCollections");
 const readingCreateTable = require("../Controllers/Collections/Reading/Collections.Reading.CreateTable");
 const readCreateTable = require("../Controllers/Collections/Read/Collections.Read.CreateTable");
-const toReadCreateTable = require("../Controllers/Collections/ToRead/Collections.ToRead.CreateTable")
+const toReadCreateTable = require("../Controllers/Collections/ToRead/Collections.ToRead.CreateTable");
+const createTableDailyReading = require("../Controllers/Metrics/Tables/CreateDailyReading");
+const createTableGoals = require("../Controllers/Metrics/Tables/CreateGoals");
 
 // Connect to SQLite database (or create if it doesn't exist)
 const db = new sqlite3.Database("./Database.db", (err) => {
@@ -16,6 +18,9 @@ const db = new sqlite3.Database("./Database.db", (err) => {
     readCreateTable(db);
     toReadCreateTable(db);
     wishlistCreateTable(db);
+    createTableDailyReading(db);
+    createTableGoals(db);
+
   }
 });
 

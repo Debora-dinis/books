@@ -15,6 +15,14 @@ const readInsert = require("./Controllers/Collections/Read/Collections.Read.Inse
 const bookRemove = require("./Controllers/Collections/Collections.RemoveBook.js");
 const bookInsert = require("./Controllers/Collections/Collections.InsertBook.js");
 const readingInsert = require("./Controllers/Collections/Reading/Collections.Reading.InsertBook.js");
+const toReadBooks = require("./Controllers/Metrics/KPIs/ToReadBooks.js");
+const readBooks = require("./Controllers/Metrics/KPIs/ReadBooks.js");
+const wishlistedBooks = require("./Controllers/Metrics/KPIs/WishlistedBooks.js");
+const updatePagesGoal = require("./Controllers/Metrics/ReadingGoals/UpdateGoalPages.js");
+const updateBooksGoal = require("./Controllers/Metrics/ReadingGoals/UpdateGoalBooks.js");
+const booksReadThisYear = require("./Controllers/Metrics/ReadingGoals/Gauges/Books/BooksReadThisYear.js");
+const bookGoalGet = require("./Controllers/Metrics/ReadingGoals/Gauges/Books/BookGoal.js")
+const booksByCategory = require("./Controllers/Metrics/Barcharts/BooksByCategory/BooksByCategory.js")
 app.use(cors());
 app.use(express.json());
 app.get("/hello", (req, res) => {
@@ -44,6 +52,27 @@ app.post("/Wishlist",wishlistInsert );
 app.delete("/Wishlist/:googleId", wishlistRemove);
 // Select all books from wishlist
 app.get("/Wishlist", wishlistGet);
+
+//Get the number of books to read
+app.get("/KPItoRead",toReadBooks);
+// Get the number of books read
+app.get("/KPIRead",readBooks)
+//Get the number of books wishlisted
+app.get("/KPIWishlisted",wishlistedBooks)
+
+//Get the number of books read this year
+app.get("/BooksReadThisYear",booksReadThisYear)
+//Get the yearly book reading goal
+app.get("/bookGoalGet",bookGoalGet)
+
+//Get number of books read per category
+
+app.get("/booksByCategory",booksByCategory)
+
+//Update page reading goal
+app.post("/GoalPages", updatePagesGoal)
+//Update book reading goal
+app.post("/GoalBooks", updateBooksGoal)
 
 // Search for books with google api
 app.post("/search", async (req, res) => {

@@ -11,6 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "axios": "^1.7.9",
+    "chart.js": "^4.4.8",
     "cors": "^2.8.5",
     "devmon": "^0.0.1",
     "dotenv": "^16.4.7",

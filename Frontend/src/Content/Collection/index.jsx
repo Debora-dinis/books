@@ -27,18 +27,18 @@ export default function UpperBar() {
   useEffect(() => {
     fetchCollections();
   }, []);
-function fetchCollectionBooks (){
-  if (!selectCollection) return;
-  axios
-    .post("http://localhost:3001/listCollectionBooks", {
-      table_name: selectCollection.trim(),
-    })
-    .then((res) => {
-      setCollectionBooks(res?.data || []);
-    });
-}
+  function fetchCollectionBooks() {
+    if (!selectCollection) return;
+    axios
+      .post("http://localhost:3001/listCollectionBooks", {
+        table_name: selectCollection.trim(),
+      })
+      .then((res) => {
+        setCollectionBooks(res?.data || []);
+      });
+  }
   useEffect(() => {
-    fetchCollectionBooks()
+    fetchCollectionBooks();
   }, [selectCollection]);
 
   // Handles submit button click
@@ -48,14 +48,15 @@ function fetchCollectionBooks (){
       return;
     }
     // Check if the collection already exists
-  const collectionExists = collections.some(
-    (collection) => collection.table_name.toLowerCase() === tableName.trim().toLowerCase()
-  );
+    const collectionExists = collections.some(
+      (collection) =>
+        collection.table_name.toLowerCase() === tableName.trim().toLowerCase()
+    );
 
-  if (collectionExists) {
-    setShowDuplicatePopup(true); // Show popup if name already exists
-    return;
-  }
+    if (collectionExists) {
+      setShowDuplicatePopup(true); // Show popup if name already exists
+      return;
+    }
     await axios.post("http://localhost:3001/CreateCollection", {
       table_name: tableName.trim(),
     });
@@ -98,7 +99,9 @@ function fetchCollectionBooks (){
 
         {showInput && (
           <div className="inputCollection">
-            <button onClick={() => setShowInput(false)} className="closeBtn">X</button>
+            <button onClick={() => setShowInput(false)} className="closeBtn">
+              X
+            </button>
             <input
               type="text"
               className="collectionName"
@@ -121,14 +124,15 @@ function fetchCollectionBooks (){
             </div>
           </div>
         )}
+
+        <div className="collectionTitle">{selectCollection}</div>
       </div>
       {/* Duplicate Name Popup Notification */}
       {showDuplicatePopup && (
         <div className="popup">
           <div className="popup-content">
             <p>
-              That collection already exists. Please choose a
-              different name.
+              That collection already exists. Please choose a different name.
             </p>
             <button onClick={() => setShowDuplicatePopup(false)}>OK</button>
           </div>
@@ -142,6 +146,7 @@ function fetchCollectionBooks (){
         updatepage={fetchCollectionBooks}
         type={selectCollection}
       ></Results>
+      <div className="bottomDiv"></div>
     </>
   );
 }

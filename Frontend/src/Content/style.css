@@ -2,4 +2,6 @@
     width: 85%;
     height: 100%;
     background-color:#000720ff;
+    overflow-y: auto;
+    overflow-x: hidden;
 }

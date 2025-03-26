@@ -7,7 +7,7 @@ export default function ({ setPage }) {
     { title: "Search", page: "Search" },
     { title: "Wishlist", page: "Wishlist" },
     { title: "Collection", page: "Collection" },
-    { title: "Statistics", page: "Statistics" },
+    { title: "Dashboard", page: "Statistics" },
   ];
 
   console.log(setPage)

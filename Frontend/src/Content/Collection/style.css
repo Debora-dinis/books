@@ -231,3 +231,15 @@
     margin-left: -2vw;
 
 }
+
+.bottomDiv{
+    min-height: 4vh;
+}
+
+.collectionTitle{
+    font-size: 25px;
+    color: #FEFCE3;
+    font-family: Helvetica, sans-serif;
+    margin-left: 25vw;
+    border-bottom: #F5877C solid;
+}
