@@ -23,7 +23,7 @@ export default function AddtoCollection({
   async function bookInsert(book, table_name) {
     const res = await axios.post(`http://localhost:3001/insertBook`, {
       table_name,
-      googleId: book.id,
+      googleId: book.id || book.google_id,
       title: book.title,
       author: book.authors || [],
       publisher: book.publisher || "",

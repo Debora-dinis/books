@@ -3,11 +3,11 @@ const db = require("../../../../Database/Database");
 const pagesReadDailyThisMonth = (req, res) => {
   const query = `
     SELECT 
-        date(date) AS day,
-        SUM(pages) AS total_pages
-    FROM reading_log
+      strftime('%d', date) AS day,  
+      SUM(pages) AS total_pages
+    FROM daily_reading
     WHERE date >= date('now', '-1 month')
-    GROUP BY date(date)
+    GROUP BY strftime('%d', date)
     ORDER BY day;
   `;
 

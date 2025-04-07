@@ -29,6 +29,7 @@ const updatePagesRead = require("./Controllers/ReadingBooks/UpdatePagesRead.js")
 const dailyReadingInsert = require("./Controllers/DailyReading/InsertDailyReading.js");
 const pagesReadThisYearByMonth = require("./Controllers/Metrics/Barcharts/Pagesbymonth/PagesByMonth.js");
 const pagesReadDailyThisMonth = require("./Controllers/Metrics/ReadingGoals/Pages/PagesReadDaily.js");
+const pageGoalGet = require("./Controllers/Metrics/ReadingGoals/Pages/PageGoal.js")
 app.use(cors());
 app.use(express.json());
 app.get("/hello", (req, res) => {
@@ -86,6 +87,8 @@ app.get("/PagesMonthly",pagesReadThisYearByMonth)
 
 //Get number of pages read daily this month
 app.get("/DailyPages",pagesReadDailyThisMonth)
+// Get page goal
+app.get("/PageGoal", pageGoalGet)
 
 //Update page reading goal
 app.post("/GoalPages", updatePagesGoal)

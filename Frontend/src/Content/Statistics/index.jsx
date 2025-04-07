@@ -8,6 +8,7 @@ import { categoriesChart } from "./CategoriesChart";
 import { Chart, registerables } from "chart.js";
 import { booksByMonth } from "./BooksMonths";
 import { pagesByMonth } from "./PagesMonthly";
+import { pagesDailyvsGoal } from "./PagesDaily"
 
 Chart.register(...registerables); // Registers all components, including scales
 
@@ -100,6 +101,34 @@ export default function Dashboard() {
 
     return myChart;
   }
+  async function getpagesgoal() {
+    const PagesDaily = await axios.get(
+      "http://localhost:3001/DailyPages"
+    );
+    const PagesGoal = await axios.get(
+      "http://localhost:3001/PageGoal"
+    );
+    console.log(PagesDaily, PagesGoal);
+    const ctx = document.getElementById("pageGoal");
+    console.log(ctx);
+    // Destroy existing chart instance if it exists
+    let existingChart = Chart.getChart(ctx);
+    if (existingChart) {
+      existingChart.destroy();
+    }
+    // Create the bar chart
+    const myChart = new Chart(ctx, pagesDailyvsGoal(PagesDaily.data,PagesGoal.data));
+
+    return myChart;
+  }
+  useEffect(() => {
+    let myChart;
+    getpagesgoal().then((res) => {
+      myChart = res;
+    });
+    // Cleanup function to destroy the chart when the component unmounts
+    return () => myChart?.destroy();
+  }, []);
   useEffect(() => {
     let myChart;
     getpagesbymonth().then((res) => {
@@ -259,8 +288,9 @@ export default function Dashboard() {
             <canvas id="BookCategories"></canvas>
           </div>
           <div className="verticalbarcharts">
-            <div className="verticalbarchart">
+            <div className="verticalbarchart" style={{height:"30vh", paddingBottom:"2vh"}}>
               <div className="charttitle"> Pages Read vs Reading Goal</div>
+              <canvas id="pageGoal"></canvas>
             </div>
             <div className="verticalbarchart">
               <div className="charttitle"> Pages read by month</div>

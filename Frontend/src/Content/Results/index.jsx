@@ -444,7 +444,7 @@ export default function ({
                 {" "}
                 <img
                   className="CardButtonImage"
-                  onClick={() => Setcollectiontoadd({ ...info, id })}
+                  onClick={() => Setcollectiontoadd({ ...savedInfo, id })}
                   src="./collection.png"
                 />
               </button>

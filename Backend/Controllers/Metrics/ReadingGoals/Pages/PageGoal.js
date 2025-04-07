@@ -1,5 +1,5 @@
 // Get the daily page goal
-const db = require("../../Database/Database.js");
+const db = require("../../../../Database/Database.js");
 const pageGoalGet = (req, res) => {
   db.all("Select pages From goals", (error, result) => {
     if (error) {
