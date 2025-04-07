@@ -19,10 +19,16 @@ const toReadBooks = require("./Controllers/Metrics/KPIs/ToReadBooks.js");
 const readBooks = require("./Controllers/Metrics/KPIs/ReadBooks.js");
 const wishlistedBooks = require("./Controllers/Metrics/KPIs/WishlistedBooks.js");
 const updatePagesGoal = require("./Controllers/Metrics/ReadingGoals/UpdateGoalPages.js");
-const updateBooksGoal = require("./Controllers/Metrics/ReadingGoals/UpdateGoalBooks.js");
-const booksReadThisYear = require("./Controllers/Metrics/ReadingGoals/Gauges/Books/BooksReadThisYear.js");
-const bookGoalGet = require("./Controllers/Metrics/ReadingGoals/Gauges/Books/BookGoal.js")
+const updateBooksGoal = require("./Controllers/Metrics/ReadingGoals/Books/UpdateGoalBooks.js");
+const booksReadThisYear = require("./Controllers/Metrics/ReadingGoals/Books/BooksReadThisYear.js");
+const bookGoalGet = require("./Controllers/Metrics/ReadingGoals/Books/BookGoal.js")
 const booksByCategory = require("./Controllers/Metrics/Barcharts/BooksByCategory/BooksByCategory.js")
+const booksByMonth = require("./Controllers/Metrics/Barcharts/BooksByMonth/BooksByMonth.js")
+const getPagesRead = require("./Controllers/ReadingBooks/GetPagesRead.js")
+const updatePagesRead = require("./Controllers/ReadingBooks/UpdatePagesRead.js");
+const dailyReadingInsert = require("./Controllers/DailyReading/InsertDailyReading.js");
+const pagesReadThisYearByMonth = require("./Controllers/Metrics/Barcharts/Pagesbymonth/PagesByMonth.js");
+const pagesReadDailyThisMonth = require("./Controllers/Metrics/ReadingGoals/Pages/PagesReadDaily.js");
 app.use(cors());
 app.use(express.json());
 app.get("/hello", (req, res) => {
@@ -45,6 +51,10 @@ app.post("/Read",readInsert)
 
 //Add a book to the reading collection
 app.post("/Reading",readingInsert)
+//Get pages read from a book
+app.get("/ReadPages",getPagesRead)
+//Update pages read from a book
+app.put("/UpdateReadPages",updatePagesRead)
 
 // Add a book to the wishlist
 app.post("/Wishlist",wishlistInsert );
@@ -65,14 +75,25 @@ app.get("/BooksReadThisYear",booksReadThisYear)
 //Get the yearly book reading goal
 app.get("/bookGoalGet",bookGoalGet)
 
-//Get number of books read per category
+//Get number of booksread by month this year
+app.get("/BooksMonthly",booksByMonth)
 
+//Get number of books read per category
 app.get("/booksByCategory",booksByCategory)
+
+//Get number of pages read by month this year
+app.get("/PagesMonthly",pagesReadThisYearByMonth)
+
+//Get number of pages read daily this month
+app.get("/DailyPages",pagesReadDailyThisMonth)
 
 //Update page reading goal
 app.post("/GoalPages", updatePagesGoal)
 //Update book reading goal
 app.post("/GoalBooks", updateBooksGoal)
+
+//Insert Daily Reading
+app.post("/DailyReading",dailyReadingInsert)
 
 // Search for books with google api
 app.post("/search", async (req, res) => {

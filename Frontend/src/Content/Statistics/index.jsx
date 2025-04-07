@@ -3,9 +3,13 @@
 import React, { useEffect, useState } from "react";
 import "./style.css";
 import axios from "axios";
-import { Chart, DoughnutController, ArcElement } from "chart.js";
+import { BookGoals } from "./BookGoals";
+import { categoriesChart } from "./CategoriesChart";
+import { Chart, registerables } from "chart.js";
+import { booksByMonth } from "./BooksMonths";
+import { pagesByMonth } from "./PagesMonthly";
 
-Chart.register(DoughnutController, ArcElement);
+Chart.register(...registerables); // Registers all components, including scales
 
 export default function Dashboard() {
   // Get number of read books
@@ -29,67 +33,104 @@ export default function Dashboard() {
     }
 
     // Book reading progress values
-    const percentage = Math.round(((booksReadThisYear.data[0].books_finished_this_year || 1) / goalBooks.data[0].books) * 100);
-    console.log(goalBooks,booksReadThisYear, percentage)
+    const percentage = Math.round(
+      ((booksReadThisYear.data[0].books_finished_this_year || 1) /
+        goalBooks.data[0].books) *
+        100
+    );
+    console.log(goalBooks, booksReadThisYear, percentage);
     // Create the gauge chart
-    const myChart = new Chart(ctx, {
-      type: "doughnut",
-      data: {
-        labels: ["Books Read", "Remaining"],
-        datasets: [
-          {
-            data: [booksReadThisYear.data[0].books_finished_this_year, goalBooks.data[0].books - booksReadThisYear.data[0].books_finished_this_year], // Example: 10 books read out of 100
-            backgroundColor: ["#F5877C", "#FEFCE3"], // Read progress & grey background
-            borderWidth: 0, // Remove borders
-            cutout: "70%", // Makes the inner circle wider
-          },
-        ],
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        aspectRatio: 0.8, // Wider appearance
-        circumference: 180, // Makes it a half-circle
-        rotation: -90, // Starts from the left
-        plugins: {
-          legend: {
-            display: false, // Hide legend for a cleaner look
-          },
-        },
-      },
-      plugins: [
-        {
-          id: "innerText",
-          afterDraw(chart) {
-            const { ctx } = chart;
-            const centerX = chart.width / 2;
-            const centerY = chart.chartArea.bottom - chart.chartArea.height / 4;
+    //@ts-ignore
+    const myChart = new Chart(
+      ctx,
+      BookGoals(booksReadThisYear, goalBooks, percentage)
+    );
 
-            ctx.save();
+    return myChart;
+  }
+  async function getcategorydistribution() {
+    const categorydistribution = await axios.get(
+      "http://localhost:3001/booksByCategory"
+    );
+    console.log(categorydistribution);
+    const ctx = document.getElementById("BookCategories");
+    console.log(ctx);
+    // Destroy existing chart instance if it exists
+    let existingChart = Chart.getChart(ctx);
+    if (existingChart) {
+      existingChart.destroy();
+    }
+    // Create the bar chart
+    const myChart = new Chart(ctx, categoriesChart(categorydistribution));
 
-            // Draw percentage number (Large, Bold)
-            ctx.font = "bold 30px Helvetica";
-            ctx.fillStyle = "#F5877C";
-            ctx.textAlign = "center";
-            ctx.textBaseline = "middle";
-            ctx.fillText(`${percentage}%`, centerX, centerY - 10); // Adjust position slightly higher
+    return myChart;
+  }
 
-            // Draw label text (Smaller, Gray)
-            ctx.font = "16px Helvetica";
-            ctx.fillStyle = "#FEFCE3";
-            ctx.fillText(`Books Completed`, centerX, centerY + 20); // Adjust position below number
-            ctx.restore();
-          },
-        },
-      ],
-    });
+  async function getbooksbymonth() {
+    const BooksMonthly = await axios.get(
+      "http://localhost:3001/BooksMonthly"
+    );
+    console.log(BooksMonthly);
+    const ctx = document.getElementById("booksByMonth");
+    console.log(ctx);
+    // Destroy existing chart instance if it exists
+    let existingChart = Chart.getChart(ctx);
+    if (existingChart) {
+      existingChart.destroy();
+    }
+    // Create the bar chart
+    const myChart = new Chart(ctx, booksByMonth(BooksMonthly.data));
+
+    return myChart;
+  }
+  async function getpagesbymonth() {
+    const PagesMonthly = await axios.get(
+      "http://localhost:3001/PagesMonthly"
+    );
+    console.log(PagesMonthly);
+    const ctx = document.getElementById("pagesByMonth");
+    console.log(ctx);
+    // Destroy existing chart instance if it exists
+    let existingChart = Chart.getChart(ctx);
+    if (existingChart) {
+      existingChart.destroy();
+    }
+    // Create the bar chart
+    const myChart = new Chart(ctx, pagesByMonth(PagesMonthly.data));
+
     return myChart;
   }
   useEffect(() => {
-      let myChart;
-     getpercentagegoalbooks().then((res)=>{
-      myChart=res;
-     })
+    let myChart;
+    getpagesbymonth().then((res) => {
+      myChart = res;
+    });
+    // Cleanup function to destroy the chart when the component unmounts
+    return () => myChart?.destroy();
+  }, []);
+  useEffect(() => {
+    let myChart;
+    getbooksbymonth().then((res) => {
+      myChart = res;
+    });
+    // Cleanup function to destroy the chart when the component unmounts
+    return () => myChart?.destroy();
+  }, []);
+
+  useEffect(() => {
+    let myChart;
+    getcategorydistribution().then((res) => {
+      myChart = res;
+    });
+    // Cleanup function to destroy the chart when the component unmounts
+    return () => myChart?.destroy();
+  }, []);
+
+  useEffect(() => {
+    let myChart;
+    getpercentagegoalbooks().then((res) => {
+      myChart = res;
+    });
     // Cleanup function to destroy the chart when the component unmounts
     return () => myChart?.destroy();
   }, []);
@@ -115,9 +156,6 @@ export default function Dashboard() {
   const [bookGoal, setBookGoal] = useState("");
   const [pageGoal, setPageGoal] = useState("");
 
-  // Dashboard page selection state
-  const [DashboardPage, setDashboardPage] = useState("Dashboard");
-
   // Update daily page goal
   async function updatePageGoal() {
     if (!pageGoal) return;
@@ -131,19 +169,9 @@ export default function Dashboard() {
   }
 
   return (
-    <div>
+    <div style={{overflow:"hidden"}}>
       <div className="header">
-        {/* Dropdown Menu */}
-        <div className="dropdown">
-          <div className="title"> {DashboardPage} </div>
-          <div className="dropdown-content">
-            <button onClick={() => setDashboardPage("Dashboard")}>
-              Dashboard
-            </button>
-            <button onClick={() => setDashboardPage("Reading")}>Reading</button>
-          </div>
-        </div>
-
+        <div className="title">Dashboard</div>
         {/* Settings Button */}
         <button
           className="optionsBtn"
@@ -202,48 +230,50 @@ export default function Dashboard() {
           </button>
         </div>
       )}
-
-      {/* Conditional Rendering Based on Selected Page */}
-      {DashboardPage === "Dashboard" ? (
-        <div>
-          <div className="kpisDiv">
-            <div className="kpi">
-              <div className="kpititle">Reading streak</div>
-              <div className="kpivalue">0</div>
-            </div>
-            <div className="kpi">
-              <div className="kpititle">Total books read</div>
-              <div className="kpivalue">{ReadBooks}</div>
-            </div>
-            <div className="kpi">
-              <div className="kpititle">No of books to read</div>
-              <div className="kpivalue">{ToReadBooks}</div>
-            </div>
-            <div className="kpi">
-              <div className="kpititle">Wishlisted books</div>
-              <div className="kpivalue">{WishlistedBooks}</div>
-            </div>
+      <div>
+        <div className="kpisDiv">
+          <div className="gauge">
+            <div className="charttitle"> Yearly book goal</div>
+            <canvas id="BookGoals"></canvas>
           </div>
-          <div className="chartscontainer">
-            <div className="gauges">
-              <div className="gauge">
-                <canvas id="BookGoals"></canvas>
-              </div>
-              <div className="gauge"></div>
-            </div>
-            <div className="verticalbarcharts">
-              <div className="verticalbarchart"></div>
-              <div className="verticalbarchart"></div>
-            </div>
-            <div className="horizontalbarchart"></div>
+          <div className="kpi">
+            <div className="kpititle">Reading streak</div>
+            <div className="kpivalue">0</div>
+          </div>
+          <div className="kpi">
+            <div className="kpititle">Total books read</div>
+            <div className="kpivalue">{ReadBooks}</div>
+          </div>
+          <div className="kpi">
+            <div className="kpititle">Books to read</div>
+            <div className="kpivalue">{ToReadBooks}</div>
+          </div>
+          <div className="kpi">
+            <div className="kpititle">Wishlisted books</div>
+            <div className="kpivalue">{WishlistedBooks}</div>
           </div>
         </div>
-      ) : (
-        <div className="reading-books-content">
-          <h2>Reading Books Section</h2>
-          
+        <div className="chartscontainer">
+          <div className="horizontalbarchart">
+            <div className="charttitle"> Book distribution by category</div>
+            <canvas id="BookCategories"></canvas>
+          </div>
+          <div className="verticalbarcharts">
+            <div className="verticalbarchart">
+              <div className="charttitle"> Pages Read vs Reading Goal</div>
+            </div>
+            <div className="verticalbarchart">
+              <div className="charttitle"> Pages read by month</div>
+              <canvas id="pagesByMonth"></canvas>
+            </div>
+          </div>
+          <div className="horizontalbarchart" style={{height:"60vh", marginTop:"1vh", width:"22vw"}}>
+            <div className="charttitle"> Books read by month</div>
+            <canvas id="booksByMonth"></canvas>
+          </div>
+          </div>
         </div>
-      )}
-    </div>
+      </div>
+  
   );
 }

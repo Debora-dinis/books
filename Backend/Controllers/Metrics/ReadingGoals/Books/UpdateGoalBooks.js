@@ -1,6 +1,6 @@
 //@ts-check
 //Update the number of books in reading goals
-const db = require("../../../Database/Database");
+const db = require("../../../../Database/Database");
 const updateBooksGoal = (req, res ) => {
     const{books}= req.body;
     db.run(

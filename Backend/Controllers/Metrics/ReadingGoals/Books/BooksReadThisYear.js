@@ -1,5 +1,5 @@
 //Get the number of books read this year
-const db = require("../../../../../Database/Database.js");
+const db = require("../../../../Database/Database.js");
 const booksReadThisYear = (req, res) => {
   db.all(
     "SELECT COUNT(*) AS books_finished_this_year FROM Read WHERE strftime('%Y', endDate) = strftime('%Y', 'now');",

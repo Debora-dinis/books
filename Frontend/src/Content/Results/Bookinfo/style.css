@@ -1,4 +1,5 @@
 .InfoBox{
+    z-index: 1;
     top: 10%;
     width: 30%;
     position: fixed;

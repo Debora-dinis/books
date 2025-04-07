@@ -18,40 +18,6 @@
     text-align: center;
 }
 
-.dropdown {
-    position: relative;
-    display: inline-block;
-  }
-
-.dropdown-content {
-    display: none;
-    position: absolute;
-    background: #FEFCE3ff;
-    min-width: 12vw;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
-    border-radius: 10px;
-  }
-  
-  .dropdown-content button {
-    width: 100%;
-    padding: 10px;
-    border: none;
-    background: #FEFCE3ff;
-    text-align: left;
-    cursor: pointer;
-    border-radius: 10px;
-    color:#000720ff;
-    font-family: Helvetica, sans-serif;
-  }
-  
-  .dropdown-content button:hover {
-    background: #724355;
-    color: #FEFCE3ff;
-  }
-  
-  .dropdown:hover .dropdown-content {
-    display: block;
-  }
 
 .optionsBtn{
     align-items: center;
@@ -105,7 +71,7 @@
 }
 
 .kpi{
-    width: 15vw;
+    width: 10vw;
     border: solid #F5877Cff;
     border-radius: 10px;
     height: 10vh;
@@ -149,7 +115,8 @@
     margin: -1vh 1vw 0vw;
     border: solid #F5877Cff;
     border-radius: 10px;
-    height: 25vh;
+    height: 23vh;
+    width: 20vw;
     padding: 10px;
 }
 
@@ -158,7 +125,8 @@
 }
 
 .verticalbarcharts{
-    width: 35%;
+    margin-top: -4vh;
+    height: 75vh;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
@@ -166,17 +134,25 @@
 }
 
 .verticalbarchart{
+    width: 25vw;
     border: solid #F5877Cff;
     border-radius: 10px;
-    height: 25vh;
+    height: 27vh;
     padding: 10px;
 }
 
 .horizontalbarchart{
-    width: 30%;
-    margin: 2vh 1vw 0vw;
+    width: 20vw;
+    margin: 12vh 1vw 0vw;
     border: solid #F5877Cff;
     border-radius: 10px;
-    height: 60vh;
-    padding: 10px;
+    height: 50vh;
+    padding: 20px;
+}
+
+.charttitle{
+    color: #FEFCE3ff;
+    font-family: Helvetica;
+    font-weight: 700;
+    font-size: 15px;
 }

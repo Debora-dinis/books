@@ -20,6 +20,7 @@ const db = new sqlite3.Database("./Database.db", (err) => {
     wishlistCreateTable(db);
     createTableDailyReading(db);
     createTableGoals(db);
+    
 
   }
 });

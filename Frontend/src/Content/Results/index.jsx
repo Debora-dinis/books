@@ -20,7 +20,17 @@ export default function ({
   const [showDatePicker, setShowDatePicker] = useState(null);
   const [dates, setDates] = useState({ startDate: "", endDate: "" });
   const [Selected, Setselected] = useState(null);
-  const[collectiontoadd,Setcollectiontoadd]=useState(null);
+  const [collectiontoadd, Setcollectiontoadd] = useState(null);
+  const [updatePagesForBook, setUpdatePagesForBook] = useState(null);
+  const [pagesRead, setPagesRead] = useState(0);
+  async function updatePagesRead(id, pages) {
+    const res = await axios.post("http://localhost:3001/updatePagesRead", {
+      googleId: id,
+      pagesRead: pages,
+    });
+    setUpdatePagesForBook(null); // Close input field after update
+    updatepage(); // Refresh the page if needed
+  }
   useEffect(() => {
     if (showDatePicker) {
       new AirDatepicker("#start-date", {
@@ -28,7 +38,7 @@ export default function ({
           setDates((prev) => ({ ...prev, startDate: formattedDate }));
         },
         locale: localeEn,
-        dateFormat: "yyyy-MM-dd"
+        dateFormat: "yyyy-MM-dd",
       });
 
       new AirDatepicker("#end-date", {
@@ -36,7 +46,7 @@ export default function ({
           setDates((prev) => ({ ...prev, endDate: formattedDate }));
         },
         locale: localeEn,
-        dateFormat: "yyyy-MM-dd"
+        dateFormat: "yyyy-MM-dd",
       });
     }
   }, [showDatePicker]);
@@ -83,6 +93,45 @@ export default function ({
     updatepage();
   }
 
+  async function updatePagesRead(
+    id,
+    pagesRead,
+    newPagesRead,
+    pageCount,
+    savedInfo
+  ) {
+    const pagesReadAux = parseInt(pagesRead) + parseInt(newPagesRead);
+    if (pagesReadAux >= pageCount) {
+      await axios.post("http://localhost:3001/Read", {
+        googleId: id,
+        title: savedInfo.title,
+        authors: savedInfo.authors || [""],
+        publisher: savedInfo.publisher || "",
+        publishedDate: savedInfo.publishedDate || "",
+        description: savedInfo.description || "",
+        pageCount: savedInfo.pageCount || "",
+        categories: savedInfo.categories || [""],
+        thumbnail: savedInfo?.thumbnail || "",
+        infoLink: savedInfo.infoLink,
+        startDate: savedInfo.startDate || "",
+        endDate: new Date().toISOString().split("T")[0],
+      });
+      await axios.delete(`http://localhost:3001/removeBook/${id}/Reading`);
+    } else {
+       await axios.put(`http://localhost:3001/UpdateReadPages`, {
+        google_id: id,
+        pagesRead: pagesReadAux,
+      });
+    }
+    await axios.post("http://localhost:3001/DailyReading", {
+      date: new Date().toISOString().split("T")[0],
+      pagesRead,
+    });
+
+    updatepage();
+    setUpdatePagesForBook(null);
+  }
+
   function drawCardButtons(info, id, savedInfo) {
     switch (type) {
       case "search":
@@ -108,7 +157,10 @@ export default function ({
               <span className="tooltipText">Add to wishlist</span>
             </div>
             <div className="CardButtonTooltip">
-              <button className="CardButton" onClick={()=>Setcollectiontoadd({...info,id})}>
+              <button
+                className="CardButton"
+                onClick={() => Setcollectiontoadd({ ...info, id })}
+              >
                 {" "}
                 <img className="CardButtonImage" src="./collection.png" />
               </button>
@@ -152,18 +204,73 @@ export default function ({
           >
             {" "}
             <div className="CardButtonTooltip">
-              <button className="CardButton">
+              <button
+                className="CardButton"
+                onClick={() => {
+                  setPagesRead(0);
+                  setUpdatePagesForBook(savedInfo.google_id);
+                }}
+              >
                 {" "}
-                <img className="CardButtonImage" src="./stats.png" />
+                <img className="CardButtonImage" src="./reading.png" />
               </button>
               <span className="tooltipText">
-                View reading progress in the dashboard
+                Update the number of pages read
               </span>
             </div>
+            {updatePagesForBook === savedInfo.google_id && (
+              <div className="collectionPicker" style={{ left: "-75%", width:"40vw" }}>
+                <div>
+                  <button
+                    className="ExitButton"
+                    style={{ position: "absolute", top: "0px", left: "0px" }}
+                    onClick={() => setUpdatePagesForBook(null)}
+                  >
+                    x
+                  </button>
+                  <div style={{ marginTop: "4vh" }}>
+                    <div className="dateLabel">Pages Read</div>
+                    <div className="pagesRead">{savedInfo.pagesRead || 0}</div>
+                  </div>
+                </div>
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    marginBottom: "2vh",
+                  }}
+                >
+                  <div className="dateLabel" style={{ marginRight: "1vw" }}>
+                    Number of pages you read today{" "}
+                  </div>
+                  <input
+                    type="number"
+                    className="inputDiv"
+                    value={pagesRead}
+                    onChange={(e) => setPagesRead(e.target.value)}
+                    min="0"
+                  />
+                </div>
+                <button
+                  className="saveBtn"
+                  onClick={() =>
+                    updatePagesRead(
+                      savedInfo.google_id,
+                      savedInfo.pagesRead || 0,
+                      pagesRead,
+                      savedInfo.pageCount,
+                      savedInfo
+                    )
+                  }
+                >
+                  Save
+                </button>
+              </div>
+            )}
             <div className="CardButtonTooltip">
               <button
                 className="CardButton"
-                onClick={() => bookRemove(savedInfo.google_id,"Reading")}
+                onClick={() => bookRemove(savedInfo.google_id, "Reading")}
               >
                 {" "}
                 <img className="CardButtonImage" src="./delete.png" />
@@ -185,7 +292,11 @@ export default function ({
             <div className="CardButtonTooltip">
               <button className="CardButton">
                 {" "}
-                <img className="CardButtonImage"  onClick={()=>Setcollectiontoadd({...info,id})} src="./collection.png" />
+                <img
+                  className="CardButtonImage"
+                  onClick={() => Setcollectiontoadd({ ...info, id })}
+                  src="./collection.png"
+                />
               </button>
               <span className="tooltipText">Add to a collection</span>
             </div>
@@ -217,7 +328,7 @@ export default function ({
             <div className="CardButtonTooltip">
               <button
                 className="CardButton"
-                onClick={() => bookRemove(savedInfo.google_id,"Read")}
+                onClick={() => bookRemove(savedInfo.google_id, "Read")}
               >
                 {" "}
                 <img className="CardButtonImage" src="./delete.png" />
@@ -227,7 +338,11 @@ export default function ({
             <div className="CardButtonTooltip">
               <button className="CardButton">
                 {" "}
-                <img className="CardButtonImage" onClick={()=>Setcollectiontoadd({...info,id})} src="./collection.png" />
+                <img
+                  className="CardButtonImage"
+                  onClick={() => Setcollectiontoadd({ ...info, id })}
+                  src="./collection.png"
+                />
               </button>
               <span className="tooltipText">Add to a collection</span>
             </div>
@@ -269,7 +384,11 @@ export default function ({
             <div className="CardButtonTooltip">
               <button className="CardButton">
                 {" "}
-                <img className="CardButtonImage" onClick={()=>Setcollectiontoadd({...savedInfo,id})}  src="./collection.png" />
+                <img
+                  className="CardButtonImage"
+                  onClick={() => Setcollectiontoadd({ ...savedInfo, id })}
+                  src="./collection.png"
+                />
               </button>
               <span className="tooltipText">Add to a collection</span>
             </div>
@@ -323,7 +442,11 @@ export default function ({
             <div className="CardButtonTooltip">
               <button className="CardButton">
                 {" "}
-                <img className="CardButtonImage" onClick={()=>Setcollectiontoadd({...info,id})} src="./collection.png" />
+                <img
+                  className="CardButtonImage"
+                  onClick={() => Setcollectiontoadd({ ...info, id })}
+                  src="./collection.png"
+                />
               </button>
               <span className="tooltipText">Add to a collection</span>
             </div>
@@ -355,12 +478,14 @@ export default function ({
   }
   return (
     <div className="ResultsBody">
-      {type=="search" && <div className="ReturnBtnDiv">
-        <button onClick={()=>setResults(null)} className="ReturnBtn">
-        <img className="ReturnBtnImg" src="./return.png"></img>
-        <span className="Returntooltip">Refresh Search</span>
-        </button>
-      </div>}
+      {type == "search" && (
+        <div className="ReturnBtnDiv">
+          <button onClick={() => setResults(null)} className="ReturnBtn">
+            <img className="ReturnBtnImg" src="./return.png"></img>
+            <span className="Returntooltip">Refresh Search</span>
+          </button>
+        </div>
+      )}
       {Results?.map(({ id, volumeInfo: info, ...savedInfo }) => (
         <div className="ResultCard">
           {" "}
@@ -433,7 +558,13 @@ export default function ({
       )}
 
       {Selected && <Bookinfo bookinfo={Selected} setbook={Setselected} />}
-      {collectiontoadd&&<AddtoCollection collection={collectiontoadd} close={()=>Setcollectiontoadd(null)} setShowDatePicker={setShowDatePicker}/>}
+      {collectiontoadd && (
+        <AddtoCollection
+          collection={collectiontoadd}
+          close={() => Setcollectiontoadd(null)}
+          setShowDatePicker={setShowDatePicker}
+        />
+      )}
     </div>
   );
 }

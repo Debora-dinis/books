@@ -14,7 +14,7 @@ export default function ReadingInsertBox({ collection, close }) {
   useEffect(() => {
     if (datepickerRef.current) {
       new AirDatepicker(datepickerRef.current, {
-        onSelect: ({ date }) => setStartDate(date.toISOString().split("T")[0]),
+        onSelect: ({ date }) => setStartDate(date.toString().split("T")[0]),
         locale: localeEn,
         dateFormat: "yyyy-MM-dd"
       });

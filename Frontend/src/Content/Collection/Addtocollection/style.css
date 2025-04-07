@@ -1,7 +1,7 @@
 .collectionPicker{
     top: 10%;
     width: 40%;
-    position: fixed;
+    position: absolute;
     height: auto;
     background-color: #F5877Cff;
     border: solid 5px #724355;
@@ -11,6 +11,7 @@
     box-shadow:2px 8px 14px 0px #000720ff;
     align-items: center;
     padding-bottom:25px;
+    z-index: 2;
 }
 
 .collectionBtn{

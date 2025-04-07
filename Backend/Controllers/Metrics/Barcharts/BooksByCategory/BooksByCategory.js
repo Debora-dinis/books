@@ -25,7 +25,8 @@ const booksBycategory = (req, res) => {
     FROM split
     WHERE category IS NOT NULL AND category != ''
     GROUP BY category
-    ORDER BY book_count DESC;
+    ORDER BY book_count DESC
+    LIMIT 10;
   `;
 
   db.all(query, (error, result) => {
