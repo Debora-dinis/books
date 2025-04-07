@@ -22,11 +22,3 @@
 - **Chart.js / Recharts** (for analytics)
 
 ---
-
-## 🚀 Installation
-
-1. Clone the repository:
-
-   ```bash
-   git clone https://github.com/yourusername/libris-vault.git
-   cd libris-vault
