@@ -22,3 +22,24 @@
 - **Chart.js / Recharts** (for analytics)
 
 ---
+## 🚀 Installation
+
+1.  Clone the repository:
+  ```bash
+  git clone https://github.com/yourusername/books.git
+    cd books
+```
+
+2. Install dependencies:
+  ```bash
+ npm install
+```
+3. Create a .env file in the root directory and add your Google Books API key:
+```
+REACT_APP_GOOGLE_BOOKS_API_KEY=your_api_key_here
+```
+4. Start the development server:
+
+	```bash
+	npm start
+	```
