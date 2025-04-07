@@ -180,6 +180,14 @@ export default function Dashboard() {
     });
   }, []);
 
+   // Get reading streak
+   const [ReadingStreak, setReadingStreak] = useState(0);
+   useEffect(() => {
+     axios.get("http://localhost:3001/ReadingStreak").then((res) => {
+       setReadingStreak(res.data.count);
+     });
+   }, []);
+
   // State for showing options panel
   const [showOptions, setShowOptions] = useState(false);
   const [bookGoal, setBookGoal] = useState("");
@@ -267,7 +275,7 @@ export default function Dashboard() {
           </div>
           <div className="kpi">
             <div className="kpititle">Reading streak</div>
-            <div className="kpivalue">0</div>
+            <div className="kpivalue">{ReadingStreak}</div>
           </div>
           <div className="kpi">
             <div className="kpititle">Total books read</div>

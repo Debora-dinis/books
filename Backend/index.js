@@ -29,7 +29,8 @@ const updatePagesRead = require("./Controllers/ReadingBooks/UpdatePagesRead.js")
 const dailyReadingInsert = require("./Controllers/DailyReading/InsertDailyReading.js");
 const pagesReadThisYearByMonth = require("./Controllers/Metrics/Barcharts/Pagesbymonth/PagesByMonth.js");
 const pagesReadDailyThisMonth = require("./Controllers/Metrics/ReadingGoals/Pages/PagesReadDaily.js");
-const pageGoalGet = require("./Controllers/Metrics/ReadingGoals/Pages/PageGoal.js")
+const pageGoalGet = require("./Controllers/Metrics/ReadingGoals/Pages/PageGoal.js");
+const readingStreak = require("./Controllers/Metrics/KPIs/ReadingStreak.js");
 app.use(cors());
 app.use(express.json());
 app.get("/hello", (req, res) => {
@@ -98,6 +99,9 @@ app.post("/GoalBooks", updateBooksGoal)
 //Insert Daily Reading
 app.post("/DailyReading",dailyReadingInsert)
 
+//Get Reading Streak
+app.get("/ReadingStreak", readingStreak)
+
 // Search for books with google api
 app.post("/search", async (req, res) => {
   console.log(req.body);
@@ -109,7 +113,7 @@ app.post("/search", async (req, res) => {
   let reqOptions = {
     url: `https://www.googleapis.com/books/v1/volumes?q=${
       req.body.Search
-    }&fields=items(id,volumeInfo(title,authors,publisher,publishedDate,description,pageCount,categories,imageLinks/thumbnail,infoLink,industryIdentifiers))&key=${process.env.API}&startIndex=${
+    }&fields=items(id,volumeInfo(title,authors,publisher,publishedDate,description,pageCount,categories,imageLinks/thumbnail,infoLink,industryIdentifiers))&printType=books&key=${process.env.API}&startIndex=${
       req.body.startIndex || 0
     }&maxResults=20`,
     method: "GET",
