@@ -43,3 +43,43 @@ REACT_APP_GOOGLE_BOOKS_API_KEY=your_api_key_here
 ```bash
 npm start
 ```
+
+---
+## 🧑‍💻 Usage
+
+### 🔍 Search
+Search for books by **title**, **author**, or **ISBN**.  
+Select the appropriate search filter, type your query into the search bar, and hit **Search** to view results.
+
+### 📚 Results
+After searching, you can:
+- Add books to your **Wishlist** to save them for later.
+- Add books to a **Collection** in your personal library.
+- View more details about each book, including the **description**, **publisher**, and other metadata.
+
+### 📝 Wishlist
+View and manage your **wishlisted** books.  
+Once you’ve purchased or finished a book, remove it from the list or move it to a collection.
+
+### 📁 Collections
+Choose from default collections like:
+- **Wishlist**
+- **Read**
+- **To Read**
+- **Reading**
+
+You can also create your **own custom collections**.  
+Select a collection to:
+- Manage the books inside it
+- Mark when a book is read
+- Track how much of a book you’ve read
+
+### 📊 Dashboard
+- Set a **yearly book reading goal** and a **daily page reading goal**
+- Track your progress toward those goals
+- View insights such as:
+  - Books read per month
+  - Most-read genres
+  - Total books in **Wishlist**, **Read**, and **To Read**
+  - Your **reading streak**
+
