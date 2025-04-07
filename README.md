@@ -59,7 +59,7 @@ After searching, you can:
 
 ### 📝 Wishlist
 View and manage your **wishlisted** books.  
-Once you’ve purchased or finished a book, remove it from the list or move it to a collection.
+Once you’ve purchased a book, remove it from the wishlist or add it to a collection.
 
 ### 📁 Collections
 Choose from default collections like:
@@ -72,7 +72,7 @@ You can also create your **own custom collections**.
 Select a collection to:
 - Manage the books inside it
 - Mark when a book is read
-- Track how much of a book you’ve read
+- Track how much of a book you’ve read, or when you read it
 
 ### 📊 Dashboard
 - Set a **yearly book reading goal** and a **daily page reading goal**
