@@ -42,7 +42,7 @@ export function pagesDailyvsGoal(queryData, pageGoal) {
           backgroundColor: "transparent",
           borderWidth: 2,
           fill: false,
-          pointRadius: 0.1,
+          pointRadius: 2,
           pointHoverRadius: 4,
           pointBackgroundColor: "#F5877C",
           tension: 0.4,

@@ -6,10 +6,10 @@ const readingStreak = (req, res) => {
   db.all(
     `
    WITH reading_days AS (
-  SELECT date(date) AS read_date
+  SELECT DISTINCT DATE(date) AS read_date
   FROM daily_reading
   WHERE pages > 0
-    AND date <= date('now')
+    AND DATE(date) <= DATE('now')
 ),
 numbered AS (
   SELECT 
@@ -35,10 +35,11 @@ streaks AS (
 SELECT IFNULL((
   SELECT streak_length
   FROM streaks
-  WHERE end_date >= date('now', '-1 day')
+  WHERE end_date >= DATE('now', '-1 day')
   ORDER BY end_date DESC
   LIMIT 1
 ), 0) AS streak_length;
+
 
 
     `,

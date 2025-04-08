@@ -118,14 +118,14 @@ export default function ({
       });
       await axios.delete(`http://localhost:3001/removeBook/${id}/Reading`);
     } else {
-       await axios.put(`http://localhost:3001/UpdateReadPages`, {
+      await axios.put(`http://localhost:3001/UpdateReadPages`, {
         google_id: id,
         pagesRead: pagesReadAux,
       });
     }
     await axios.post("http://localhost:3001/DailyReading", {
       date: new Date().toISOString().split("T")[0],
-      pagesRead,
+      pagesRead: newPagesRead,
     });
 
     updatepage();
@@ -219,7 +219,10 @@ export default function ({
               </span>
             </div>
             {updatePagesForBook === savedInfo.google_id && (
-              <div className="collectionPicker" style={{ left: "-75%", width:"40vw" }}>
+              <div
+                className="collectionPicker"
+                style={{ left: "-75%", width: "40vw" }}
+              >
                 <div>
                   <button
                     className="ExitButton"
